@@ -16,7 +16,7 @@ If it doesn't exist, the mode is **first-run** — skip the full scan and
 move to the interview immediately. No need to check 10 artifact types
 when the primary signal is absent.
 
-Also read `.pibrc.json` if it exists — it records which modules the CLI
+Also read `.corrc.json` if it exists — it records which modules the CLI
 installed and which were skipped (with reasons). The interview phase uses
 this to skip redundant questions.
 

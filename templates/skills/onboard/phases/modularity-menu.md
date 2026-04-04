@@ -6,13 +6,13 @@ opt-in. Progressive adoption means starting with what you need and adding
 modules as the project matures.
 
 When this file is absent or empty, the default behavior is: read
-`.pibrc.json` for module selections made during CLI install, then present
+`.corrc.json` for module selections made during CLI install, then present
 the module hierarchy with that context. To explicitly skip the menu,
 write only `skip: true`.
 
-## Reading CLI Selections (.pibrc.json)
+## Reading CLI Selections (.corrc.json)
 
-If `.pibrc.json` exists in the project root, the CLI has already asked
+If `.corrc.json` exists in the project root, the CLI has already asked
 about module selections. Read the `modules` and `skipped` fields:
 
 - **Installed modules** (`modules` map, value `true`): These are already
@@ -29,7 +29,7 @@ For skipped modules with alternatives, the interview (previous phase)
 should have already asked about the alternative system. Use those answers
 here to confirm the wiring plan.
 
-If `.pibrc.json` doesn't exist (manual install or pre-npm adoption),
+If `.corrc.json` doesn't exist (manual install or pre-npm adoption),
 fall back to presenting the full menu as described below.
 
 ## Module Hierarchy
@@ -49,21 +49,24 @@ with each session instead of resetting to zero.
 **Cost:** Two phase directories with a few files each. Runs at the
 start and end of every session (adds 30-60 seconds each).
 
-### 2. Work Tracking (pib-db) — RECOMMENDED
+### 2. Work Tracking — RECOMMENDED
 
-A lightweight SQLite-based task and project tracker. Gives orient
-something to scan and debrief something to close.
+How work items are tracked. The work-tracking onboard phase presents the
+options in detail; this is the module-level view.
 
-**What you get:** Open actions, due dates, project containers, flagged
-items. Orient surfaces what's overdue or due today. Debrief marks
-things done. Plan creates work items.
+**Options (chosen during onboard work-tracking phase):**
+- **pib-db (SQLite):** Structured, queryable, local-only. CLI interface.
+  Integrates with plan/execute and audit findings. Requires `better-sqlite3`.
+- **Markdown (tasks.md):** Simple, git-friendly, zero dependencies. Open
+  items are checkbox lines in a file. Good for solo/quick-start projects.
+- **External:** Wire orient/debrief to GitHub Issues, Linear, Jira, etc.
+  You customize phase files after onboard.
 
-**Cost:** One SQLite database, CLI interface via `node scripts/pib-db.js`.
-No external service dependency.
+**What you get:** Open actions, due dates, flagged items. Orient surfaces
+what needs attention. Debrief marks things done. Plan creates work items.
 
-**Skip if:** You already have a work tracker you're happy with (GitHub
-Issues, Linear, Jira, a markdown file). You can wire the session loop to
-your existing tracker instead.
+**Skip if:** You don't need work tracking in the session loop. You can
+always add it later by re-running `/onboard`.
 
 ### 3. Planning (plan + execute) — OPT-IN
 

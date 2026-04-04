@@ -95,7 +95,7 @@ Read your API server (see `_context.md § API / Server`) and check:
   against actual API responses)
 
 #### Step 5: Check Identity Integrity
-If your project uses a stable identity system (fid tags, UUIDs, slugs,
+If your project uses a stable identity system (UUIDs, slugs, semantic IDs,
 or similar), verify:
 
 - Items that should have identity tags but don't
@@ -126,7 +126,7 @@ have internal consistency requirements:
 
 ## Boundaries
 
-- Empty sub-inboxes (that's healthy -- captures are processed)
+- Empty sub-collections or queues (that's healthy -- items are processed)
 - New entities with minimal structure (expected in early stages)
 - Items added today (they're fresh, not stale)
 - Deployment architecture concerns (that's the architecture expert)

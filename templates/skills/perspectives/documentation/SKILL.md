@@ -147,11 +147,10 @@ grep -oP '`[^`]+\.(sh|js|ts|tsx|md|yaml|json)`' CLAUDE.md | \
 
 ## Calibration Examples
 
-**Good observation:** "Root CLAUDE.md line 42 lists 'sync/ -- Sync state
-(deployment sync logs)' in the directory structure. The sync/ directory exists
-but is empty -- sync state is no longer tracked in files since the migration.
-Should the sync/ directory be removed and CLAUDE.md updated, or should sync
-state files be created for the current sync mechanism?"
+**Good observation:** "Root CLAUDE.md lists a 'logs/' directory in the
+directory structure, but the directory exists and is empty -- logging was
+migrated to a cloud service. Should the directory be removed and CLAUDE.md
+updated, or should log files be created for the current logging mechanism?"
 
 **Good observation:** "Convention violation: 3 components import a UI library
 directly. CLAUDE.md states all UI imports go through components/ui/index.ts.

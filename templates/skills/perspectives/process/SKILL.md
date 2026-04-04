@@ -144,7 +144,7 @@ Each Claude Code session is a unit of work. Are sessions effective?
 The most important question: **how much does the process demand of the user?**
 
 - **Required input** -- What does the user HAVE to do for the system to work?
-  (Triage findings, approve plans, confirm inbox routing, etc.) Is this the
+  (Triage findings, approve plans, confirm routing decisions, etc.) Is this the
   right amount -- enough for cognitive sovereignty, not so much it's a burden?
 - **Ceremony vs value** -- Are there process steps that feel like busywork?
   Confirmations that are always "yes"? Reviews that never surface issues? (If
@@ -228,8 +228,8 @@ execution, monitoring, and self-correction.
   a startup hook rather than an optional skill, though that would add latency to
   quick sessions.
 
-- When the user is away for several days, inbox items accumulate, audit findings
-  pile up untriaged, and sync logs go unreviewed. Returning to the system means
+- When the user is away for several days, work items accumulate, audit findings
+  pile up untriaged, and logs go unreviewed. Returning to the system means
   facing a backlog across multiple surfaces. The system should degrade
   gracefully -- perhaps by auto-deferring low-priority items or surfacing a
   "catch-up" summary when the user returns after absence.

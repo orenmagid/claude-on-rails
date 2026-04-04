@@ -5,7 +5,7 @@ listen to answers, follow up on what's interesting or unclear. The quality
 of the context layer depends directly on the quality of this conversation.
 
 When this file is absent or empty, the default behavior is: ask mode-
-adapted questions as described below, 2-3 at a time, with follow-ups.
+adapted questions as described below, one at a time, with follow-ups.
 To explicitly skip the interview (e.g., when generating context from
 existing documentation), write only `skip: true`.
 
@@ -69,21 +69,17 @@ The user just ran the CLI in an empty or near-empty directory. There's
 nothing to scan, no workflow to reflect on yet. Questions must be
 **forward-looking** — about intentions, not retrospection.
 
-**Round 1 — What and why:**
-- What are you trying to build?
-- What will you be using Claude Code for on this project?
-
-**Round 2 — How you work (adapt based on Round 1):**
-- How do you usually keep track of what needs to be done? (A list
-  somewhere, a tool, your head?)
-- Will anyone else be working on this with you?
-- Have you struggled with anything on past projects that you'd want
-  to get ahead of this time?
-
-**Round 3 — Scope and shape (adapt based on Rounds 1-2):**
-- How big is this? A weekend project, something you'll be working on
-  for months?
-- What does done look like, roughly?
+**Questions (ask one at a time, in order — skip or reorder based on
+what the conversation reveals):**
+1. What are you trying to build?
+2. What will you be using Claude Code for on this project?
+3. How do you usually keep track of what needs to be done?
+4. Will anyone else be working on this with you?
+5. Have you struggled with anything on past projects that you'd want
+   to get ahead of this time?
+6. How big is this? A weekend project, something you'll be working on
+   for months?
+7. What does done look like, roughly?
 
 **Follow-up instincts:**
 - If they describe something ambitious, ask what the first milestone is
@@ -98,26 +94,23 @@ The user ran the CLI in a project that already has substance. There are
 files to scan — use them for tech detection instead of asking. Focus the
 conversation on **work and pain**, not tooling.
 
-**Before Round 1:** Scan the project for tech signals (package.json,
+**Before asking:** Scan the project for tech signals (package.json,
 Cargo.toml, requirements.txt, Dockerfile, .github/, etc.). Note what
 you find — it informs your follow-ups but doesn't replace the
 conversation. Don't announce what you found; weave it in naturally.
 
-**Round 1 — Identity:**
-- Tell me about this project. What does it do, who is it for?
-- What are you mainly working on right now?
-
-**Round 2 — Pain (adapt based on Round 1):**
-- What tends to break or get forgotten?
-- What do you wish Claude knew about this project from the very start
-  of every session?
-- Is there anything that fails silently — things that go wrong without
-  anyone noticing until it's too late?
-
-**Round 3 — Operations (adapt based on Rounds 1-2):**
-- How do you currently keep track of what needs to be done?
-- What does a typical working session on this project look like?
-- Is there a deploy pipeline or remote environment?
+**Questions (ask one at a time, in order — skip or reorder based on
+what the conversation reveals):**
+1. Tell me about this project. What does it do?
+2. What are you mainly working on right now?
+3. What tends to break or get forgotten?
+4. What do you wish Claude knew about this project from the very start
+   of every session?
+5. Is there anything that fails silently — things that go wrong without
+   anyone noticing until it's too late?
+6. How do you currently keep track of what needs to be done?
+7. What does a typical working session on this project look like?
+8. Is there a deploy pipeline or remote environment?
 
 **Follow-up instincts:**
 - If someone mentions a pain point, ask *why* it happens and how often
@@ -131,48 +124,39 @@ conversation. Don't announce what you found; weave it in naturally.
 The session loop has been running. Shift from "what is this" to "what
 have you learned."
 
-**Round 1 — Session Loop Feedback:**
-- What has the session loop taught you that the context files don't
-  currently capture?
-- Does orient give you what you need at session start? What's missing?
-- Does debrief close the right loops? What falls through?
-
-**Round 2 — Friction (adapt based on Round 1):**
-- Where have you hit friction with the current setup?
-- Are there things you keep having to tell Claude that should already be
-  in the context?
-- Any phase files that aren't pulling their weight?
-
-**Round 3 — Growth (adapt based on Rounds 1-2):**
-- Has the project changed since the initial onboard? New components,
-  shifted priorities, different pain points?
-- Are you ready for any of the modules you skipped last time?
-- Anything you've been doing manually that should be automated?
+**Questions (ask one at a time, in order — skip or reorder based on
+what the conversation reveals):**
+1. What has the session loop taught you that the context files don't
+   currently capture?
+2. Does orient give you what you need at session start? What's missing?
+3. Does debrief close the right loops? What falls through?
+4. Where have you hit friction with the current setup?
+5. Are there things you keep having to tell Claude that should already be
+   in the context?
+6. Any phase files that aren't pulling their weight?
+7. Has the project changed since the initial onboard?
+8. Are you ready for any of the modules you skipped last time?
+9. Anything you've been doing manually that should be automated?
 
 ## Mature Re-Run Questions
 
 The system has been running long enough to accumulate both value and
 cruft. This is a health check.
 
-**Round 1 — Usage Reality:**
-- Which modules are you actually using regularly?
-- Anything that felt useful at first but you've stopped relying on?
-- Are there modules you adopted but never really configured properly?
-
-**Round 2 — Gaps and Drift:**
-- What gaps have you noticed in coverage? Things the system should catch
-  but doesn't.
-- Has the project's architecture or priorities shifted since the last
-  onboard run? Does the context layer reflect the current reality?
-- Any new pain points that weren't there before?
-
-**Round 3 — Simplification:**
-- Is anything ready to retire? Phase files, perspectives, health checks
-  that check for problems you no longer have?
-- Could any of your custom phase files be simplified now that you know
-  what you actually need?
-- Are there patterns in your memory/feedback that suggest a structural
-  change rather than another rule?
+**Questions (ask one at a time, in order — skip or reorder based on
+what the conversation reveals):**
+1. Which modules are you actually using regularly?
+2. Anything that felt useful at first but you've stopped relying on?
+3. Are there modules you adopted but never really configured properly?
+4. What gaps have you noticed? Things the system should catch but doesn't.
+5. Has the project's architecture or priorities shifted since the last
+   onboard run?
+6. Any new pain points that weren't there before?
+7. Is anything ready to retire?
+8. Could any of your custom phase files be simplified now that you know
+   what you actually need?
+9. Are there patterns in your memory/feedback that suggest a structural
+   change rather than another rule?
 
 ## Scope Boundary
 
@@ -196,7 +180,11 @@ onboard's job.
 
 ## Conversation Guidelines
 
-- **2-3 questions per round.** Let the user respond before asking more.
+- **One question at a time.** Ask a single question, wait for the answer,
+  then ask the next one. Never stack multiple questions in one message.
+  The rounds below are a *sequence*, not a batch — each bullet is its own
+  turn. Follow-ups based on the answer take priority over the next
+  planned question.
 - **Follow up on substance.** If an answer reveals something important,
   dig into it before moving on to the next topic.
 - **Note CoR module signals.** When someone describes a pain point that
@@ -204,10 +192,16 @@ onboard's job.
   phase — but don't interrupt the conversation to pitch the module.
 - **Don't assume answers.** Even if you can see the project's files, ask
   about things like pain points and priorities that only the user knows.
+- **Earn the right to ask about specifics.** Don't ask about tech stack,
+  deployment pipelines, or architecture until the conversation has shown
+  the user has context to give a meaningful answer. Lead with open
+  questions ("tell me about this project") and let specifics emerge
+  naturally. If the user is non-technical or early in their thinking,
+  those questions may never be appropriate — and that's fine.
 - **Summarize before generating.** After the interview, reflect back what
   you heard: "Here's what I'm taking away from this conversation..." Let
   the user correct before generating files.
-- **For skipped modules (.pibrc.json):** If the CLI's `skipped` field
+- **For skipped modules (.corrc.json):** If the CLI's `skipped` field
   shows a module was opted out with a reason, weave that into the
   conversation naturally. "I see you're tracking work somewhere else —
   tell me about that" rather than "Module work-tracking was skipped."

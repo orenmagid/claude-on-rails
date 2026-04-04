@@ -52,14 +52,18 @@ For each signal source, provide:
 
 | Signal | Suggested Perspective |
 |--------|----------------------|
-| React / Vue / Svelte in deps | accessibility, mobile-responsiveness |
-| UI framework (Mantine, MUI, Chakra, etc.) | framework-quality (project-specific) |
+| React / Vue / Svelte in deps | usability, accessibility, mobile-responsiveness |
+| UI framework (Mantine, MUI, Chakra, etc.) | usability, framework-quality (project-specific) |
 | SQLite / PostgreSQL / MySQL | data-integrity |
-| Docker / Railway / Fly.io / Vercel | deployment, security |
+| Docker / Railway / Fly.io / Vercel | architecture, security |
 | Express / Fastify / Hono | security, performance |
 | Test framework (jest, vitest, mocha) | qa |
 | TypeScript | boundary-conditions |
 | CI/CD configs (.github/workflows, etc.) | process |
+| Complex architecture (3+ services, monorepo) | architecture |
+| Long-running project (6+ months of git history) | historian |
+| Many skills (5+ in .claude/skills/) | skills-coverage |
+| Features shipping regularly | system-advocate |
 
 These mappings are starting points, not prescriptions. A project may
 already cover a signal through an existing broader perspective (e.g.,

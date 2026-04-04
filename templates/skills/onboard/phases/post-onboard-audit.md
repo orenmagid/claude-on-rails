@@ -39,7 +39,7 @@ Compare what the interview revealed against what was generated:
 
 ### 2. Module–Phase Alignment
 
-Cross-reference `.pibrc.json` (installed vs skipped modules) against the
+Cross-reference `.corrc.json` (installed vs skipped modules) against the
 generated phase files:
 
 - **Skipped modules:** No phase file should reference a skipped module's
@@ -61,7 +61,25 @@ Quick filesystem checks:
 - `system-status.md` exists and has initial content
 - Hook scripts in `.claude/hooks/` are executable (if hooks module adopted)
 
-### 4. First-Session Readiness
+### 4. Technology-Implied Perspectives
+
+Check whether the project's technology signals suggest perspectives that
+aren't activated. Cross-reference the interview answers and detected
+technologies against the perspective catalog:
+
+- **UI framework detected** → usability, accessibility, mobile-responsiveness
+- **Database detected** → data-integrity
+- **API server detected** → security, performance
+- **Complex architecture (3+ layers/services)** → architecture
+- **Long-running project** → historian
+- **Many skills (5+)** → skills-coverage
+- **Features shipping regularly** → system-advocate
+
+If implied perspectives aren't in `_groups.yaml` (or equivalent), note
+it as a recommendation — not a blocker. The user may have good reasons
+to skip them, or may want to add them later via `/seed`.
+
+### 5. First-Session Readiness
 
 Simulate what `/orient` will do on its first run:
 
