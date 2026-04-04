@@ -13,6 +13,9 @@ related:
     path: .claude/skills/onboard/phases/interview.md
     role: "Conversational interview questions"
   - type: file
+    path: .claude/skills/onboard/phases/options.md
+    role: "Structured decision points before generation"
+  - type: file
     path: .claude/skills/onboard/phases/generate-context.md
     role: "Generate or update context files"
   - type: file
@@ -154,7 +157,21 @@ it for the modularity menu phase. The interview is the most valuable
 phase because it captures knowledge that no amount of file scanning can
 surface.
 
-### 3. Generate Context
+### 3. Options
+
+Read `phases/options.md` for how to present structured decision points.
+
+**Default (absent/empty):** If the interview revealed open decisions
+(tech stack undecided, architecture unclear, "what would you recommend?"),
+present 2-3 options per decision with trade-offs. Uses architecture and
+boundary-conditions perspectives internally to evaluate each option.
+Skips automatically when the user already has clear opinions or this is
+a re-run.
+
+The user's choices feed into generate-context. Deferred decisions are
+noted as open questions in `_context.md`.
+
+### 4. Generate Context
 
 Read `phases/generate-context.md` for how to create or update the context
 layer from interview answers.
@@ -173,7 +190,7 @@ would change as diffs — never overwrite without showing the delta. Let
 the user approve, modify, or reject each change. The user owns their
 context files; onboard proposes, never imposes.
 
-### 4. Generate Session Loop
+### 5. Generate Session Loop
 
 Read `phases/generate-session-loop.md` for how to wire orient and debrief
 phase files.
@@ -196,7 +213,7 @@ In re-run mode, examine existing phase files and propose refinements based
 on what the interview surfaced. If the user said "orient never shows me X,"
 that's a signal to update the work-scan or health-checks phase.
 
-### 5. Modularity Menu
+### 6. Modularity Menu
 
 Read `phases/modularity-menu.md` for which CoR modules to present.
 
@@ -209,7 +226,7 @@ they can always add more later.
 In re-run mode, show what's adopted alongside what's available. Surface
 retirement candidates — modules that were adopted but aren't being used.
 
-### 6. Summary
+### 7. Summary
 
 Read `phases/summary.md` for how to present results.
 
@@ -221,7 +238,7 @@ through use as orient and debrief reveal what's missing.
 In re-run mode, present a before/after view: what the context layer
 looked like before, what changed, and why.
 
-### 7. Post-Onboard Audit
+### 8. Post-Onboard Audit
 
 Read `phases/post-onboard-audit.md` for the configuration sanity check.
 
@@ -242,6 +259,7 @@ pre-flight check, not a deferred finding.
 |-------|----------|-------------------|
 | `detect-state.md` | Default: scan standard CoR artifacts | What artifacts to scan and how to determine mode |
 | `interview.md` | Default: mode-adapted questions | What to ask and how to follow up |
+| `options.md` | Default: present decisions with trade-offs | What decisions to surface and how to frame options |
 | `generate-context.md` | Default: create/update _context.md, CLAUDE.md, system-status.md | What files to generate and how |
 | `generate-session-loop.md` | Default: wire orient/debrief phases | How to set up the session loop |
 | `modularity-menu.md` | Default: present module hierarchy | Which modules to present and how |
