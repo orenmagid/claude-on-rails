@@ -22,7 +22,7 @@
 
 ## What's Planned
 
-- README update to document `--lean` flag
-- Publish v0.2.0 to npm
 - Onboard interview testing across different project types
 - Perspective seeding from tech signals (`/seed`)
+- Run `/extract` from Flow to test the proposal pipeline
+- Update Flow to consume v0.3.0
