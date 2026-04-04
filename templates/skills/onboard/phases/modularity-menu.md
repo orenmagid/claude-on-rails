@@ -5,9 +5,32 @@ and what to defer. The session loop is mandatory; everything else is
 opt-in. Progressive adoption means starting with what you need and adding
 modules as the project matures.
 
-When this file is absent or empty, the default behavior is: present the
-module hierarchy as described below, with recommendations based on the
-interview. To explicitly skip the menu, write only `skip: true`.
+When this file is absent or empty, the default behavior is: read
+`.pibrc.json` for module selections made during CLI install, then present
+the module hierarchy with that context. To explicitly skip the menu,
+write only `skip: true`.
+
+## Reading CLI Selections (.pibrc.json)
+
+If `.pibrc.json` exists in the project root, the CLI has already asked
+about module selections. Read the `modules` and `skipped` fields:
+
+- **Installed modules** (`modules` map, value `true`): These are already
+  set up. Don't re-ask. Confirm what's installed and move on.
+- **Skipped modules** (`skipped` map, with reasons): The user opted out
+  during CLI install. The reason matters — it tells you what alternative
+  to ask about. For example:
+  - `"work-tracking": "User has existing Railway API"` → ask how they
+    track work so you can wire phase files to their system
+  - `"work-tracking": "Not needed yet"` → note it's available later, move on
+  - `"audit": "Project too small"` → respect the decision, note the threshold
+
+For skipped modules with alternatives, the interview (previous phase)
+should have already asked about the alternative system. Use those answers
+here to confirm the wiring plan.
+
+If `.pibrc.json` doesn't exist (manual install or pre-npm adoption),
+fall back to presenting the full menu as described below.
 
 ## Module Hierarchy
 

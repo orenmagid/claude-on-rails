@@ -113,8 +113,8 @@ the diff phase.
 Read `phases/diff-upstream.md` for how to compare the project's state
 against the upstream PIB package.
 
-**Default (absent/empty):** Look for `process-in-a-box/` in the project
-root (the standard location for the upstream PIB package). For each
+**Default (absent/empty):** Look for `.pib-upstream/` in the project
+root (staged by `npx create-claude-rails upgrade`). For each
 adopted skeleton: perform a semantic diff of SKILL.md — section by
 section, not line by line. Identify new phases, changed workflows,
 updated defaults. For non-adopted skills: list what's new and available.
@@ -202,7 +202,7 @@ the workflow. Execute them at their declared position.
 | Phase | Absent = | What it customizes |
 |-------|----------|-------------------|
 | `detect-current.md` | Default: scan .claude/skills/, perspectives, hooks, DB | How to inventory adoption state |
-| `diff-upstream.md` | Default: compare against process-in-a-box/ in project root | Where upstream lives and how to diff |
+| `diff-upstream.md` | Default: compare against .pib-upstream/ (staged by CLI) | Where upstream lives and how to diff |
 | `merge.md` | Default: explain + examine + propose for each change | How to handle each change category |
 | `apply.md` | Default: copy skeletons, collaborative edits, SQL migrations | How to apply approved changes |
 

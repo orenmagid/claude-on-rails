@@ -4,17 +4,34 @@ Build a structured manifest of the project's current PIB adoption. This
 manifest is consumed by the diff-upstream phase to determine what has
 changed.
 
-When this file is absent or empty, the default behavior is: scan the
-project's `.claude/skills/`, perspectives, hooks, and database for PIB
-artifacts. To explicitly skip detection, write only `skip: true`.
+When this file is absent or empty, the default behavior is: read
+`.pibrc.json` for version and module metadata, then scan the project's
+`.claude/skills/`, perspectives, hooks, and database for PIB artifacts.
+To explicitly skip detection, write only `skip: true`.
 
 ## What to Inventory
+
+### Package Metadata (.pibrc.json)
+
+Read `.pibrc.json` from the project root. This file is written by the
+CLI installer (`npx create-claude-rails`) and contains:
+
+- **`version`** — the installed package version (for diff-upstream comparison)
+- **`installedAt`** — when the install or last upgrade happened
+- **`modules`** — which module groups were selected (boolean map)
+- **`skipped`** — modules the user opted out of, with reasons
+- **`upstreamPackage`** — the npm package name (`create-claude-rails`)
+
+If `.pibrc.json` is missing, this is either a pre-npm adoption or a
+manual install. Note this in the manifest — the diff-upstream phase
+needs to know whether version comparison is possible or if it must fall
+back to pure filesystem diffing.
 
 ### Skills
 
 For each directory in `.claude/skills/`:
 - **Is it a PIB skeleton?** Compare the SKILL.md against the upstream
-  `process-in-a-box/skills/` directory. If it matches a known skeleton
+  upstream templates directory. If it matches a known skeleton
   (by name or by frontmatter `name` field), it's a PIB skill.
 - **Phase file status:** For each phase file the skeleton defines, check
   whether the project's copy is: absent (using default), empty (using
@@ -51,10 +68,15 @@ For each directory in `.claude/skills/`:
 ## Output Format
 
 Produce a structured manifest (in conversation, not a file) listing:
+- **Package version** from `.pibrc.json` (or "unknown — no .pibrc.json")
+- **Installed modules** from `.pibrc.json` modules map
+- **Skipped modules** with reasons from `.pibrc.json` skipped map
 - Each adopted skill with its phase file statuses
 - Each adopted perspective group with member count
 - Hook count and types
 - Schema state
 - Pattern/archive counts
 
-This manifest feeds directly into the diff-upstream phase.
+This manifest feeds directly into the diff-upstream phase. The version
+field is especially critical — it determines whether diff-upstream can
+do a targeted version-to-version comparison or must diff everything.

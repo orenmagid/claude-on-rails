@@ -4,15 +4,23 @@ Compare the project's current adoption state (from detect-current) against
 the upstream PIB package. Produce a categorized list of changes.
 
 When this file is absent or empty, the default behavior is: look for
-`process-in-a-box/` in the project root and perform semantic diffs of
-all adopted skeletons. To explicitly skip diffing, write only `skip: true`.
+`.pib-upstream/` in the project root (staged by `npx create-claude-rails
+upgrade`) and perform semantic diffs of all adopted skeletons. To
+explicitly skip diffing, write only `skip: true`.
 
 ## Locating Upstream
 
-Default: `process-in-a-box/` in the project root. This is where the PIB
-package lives when vendored into the project. If your project stores it
-elsewhere (a submodule, a symlinked directory, a separate checkout),
-specify the path here.
+Default: `.pib-upstream/` in the project root. This directory is created
+by `npx create-claude-rails upgrade`, which fetches the latest package
+from npm and stages its templates here for comparison. The directory is
+gitignored — it's a transient diff target, not a permanent fixture.
+
+If `.pib-upstream/` doesn't exist, prompt the user:
+"Run `npx create-claude-rails upgrade` first — it fetches the latest
+upstream and stages it for comparison."
+
+If your project stores upstream elsewhere (a submodule, a symlinked
+directory, a separate checkout), specify the path here.
 
 ## Diff Strategy
 

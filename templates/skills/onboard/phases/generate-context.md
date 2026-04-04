@@ -15,9 +15,9 @@ Create these files from interview answers:
 
 ### _context.md
 
-Use `_context-template.md` (from `process-in-a-box/skills/perspectives/`)
-as the structural starting point. Populate each section from what the
-interview revealed:
+Use `_context-template.md` (from `.claude/skills/perspectives/`) as the
+structural starting point. Populate each section from what the interview
+revealed:
 
 - **What This Project Is** — from identity questions
 - **Core Principles** — from pain points and priorities (what matters most?)

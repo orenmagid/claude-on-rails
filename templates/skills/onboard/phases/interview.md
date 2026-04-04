@@ -9,34 +9,87 @@ adapted questions as described below, 2-3 at a time, with follow-ups.
 To explicitly skip the interview (e.g., when generating context from
 existing documentation), write only `skip: true`.
 
+## Communication Calibration
+
+Don't ask the user how technical they are. Listen to how they talk.
+Within the first 2-3 answers, you'll know whether they reference
+technical concepts naturally or describe things in terms of outcomes.
+Match their register — mirror their vocabulary, explain at the level
+they're engaging at. Don't talk down, don't talk over.
+
+This isn't a variable to detect ("technical_level: 3"). It's a
+conversational stance: meet people where they are. Someone who says
+"I need a REST API with PostgreSQL" gets different follow-ups than
+someone who says "I need a way to track client appointments." Both
+are valid starting points.
+
 ## First-Run Questions
 
-Start with the big picture and narrow based on answers. Never ask all
-questions at once — this is a conversation, not an intake form.
+The detect-state phase identified this as a first run (no PIB context
+layer exists). But "first run" covers two very different situations:
+
+### Greenfield (no project yet, or near-empty directory)
+
+The user just ran the CLI in an empty or near-empty directory. There's
+nothing to scan, no workflow to reflect on yet. Questions must be
+**forward-looking** — about intentions, not retrospection.
+
+**Round 1 — What and why:**
+- What are you trying to build?
+- What will you be using Claude Code for on this project?
+
+**Round 2 — How you work (adapt based on Round 1):**
+- How do you usually keep track of what needs to be done? (A list
+  somewhere, a tool, your head?)
+- Will anyone else be working on this with you?
+- Have you struggled with anything on past projects that you'd want
+  to get ahead of this time?
+
+**Round 3 — Scope and shape (adapt based on Rounds 1-2):**
+- How big is this? A weekend project, something you'll be working on
+  for months?
+- What does done look like, roughly?
+
+**Follow-up instincts:**
+- If they describe something ambitious, ask what the first milestone is
+- If they mention past frustrations, dig into what specifically went wrong
+- If they're vague about the project, that's fine — they may be figuring
+  it out. Ask what they know so far and what's still open
+- If they mention collaborators, ask how they'll coordinate
+
+### Existing Project (source files, config, or meaningful content present)
+
+The user ran the CLI in a project that already has substance. There are
+files to scan — use them for tech detection instead of asking. Focus the
+conversation on **work and pain**, not tooling.
+
+**Before Round 1:** Scan the project for tech signals (package.json,
+Cargo.toml, requirements.txt, Dockerfile, .github/, etc.). Note what
+you find — it informs your follow-ups but doesn't replace the
+conversation. Don't announce what you found; weave it in naturally.
 
 **Round 1 — Identity:**
 - Tell me about this project. What does it do, who is it for?
-- What tech stack are you working with?
-- Is this a solo project or a team? If a team, what's the collaboration
-  model?
+- What are you mainly working on right now?
 
 **Round 2 — Pain (adapt based on Round 1):**
-- What pain points led you to setting up PIB?
-- What breaks silently in this project? Things that fail without anyone
-  noticing until it's too late.
-- What do you wish Claude knew about this project from the very start of
-  every session?
+- What tends to break or get forgotten?
+- What do you wish Claude knew about this project from the very start
+  of every session?
+- Is there anything that fails silently — things that go wrong without
+  anyone noticing until it's too late?
 
 **Round 3 — Operations (adapt based on Rounds 1-2):**
-- How do you currently track work? (Issues, backlog file, mental list, etc.)
-- Is there a remote data store or deployment pipeline?
-- What does a typical working session look like for you on this project?
+- How do you currently keep track of what needs to be done?
+- What does a typical working session on this project look like?
+- Is there a deploy pipeline or remote environment?
 
 **Follow-up instincts:**
 - If someone mentions a pain point, ask *why* it happens and how often
-- If someone describes their stack, ask what the tricky parts are
 - If someone says "it's just me," ask how they keep context between sessions
 - If someone mentions a team, ask about handoff friction
+- If someone describes their workflow, listen for things that could be
+  automated or checked
 
 ## Early Re-Run Questions
 
@@ -67,7 +120,7 @@ The system has been running long enough to accumulate both value and
 cruft. This is a health check.
 
 **Round 1 — Usage Reality:**
-- Which PIB modules are you actually using regularly?
+- Which modules are you actually using regularly?
 - Anything that felt useful at first but you've stopped relying on?
 - Are there modules you adopted but never really configured properly?
 
@@ -99,3 +152,7 @@ cruft. This is a health check.
 - **Summarize before generating.** After the interview, reflect back what
   you heard: "Here's what I'm taking away from this conversation..." Let
   the user correct before generating files.
+- **For skipped modules (.pibrc.json):** If the CLI's `skipped` field
+  shows a module was opted out with a reason, weave that into the
+  conversation naturally. "I see you're tracking work somewhere else —
+  tell me about that" rather than "Module work-tracking was skipped."
