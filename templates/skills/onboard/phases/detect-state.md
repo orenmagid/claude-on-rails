@@ -9,68 +9,50 @@ standard PIB artifact set, classify each artifact's richness, and
 determine the mode. To explicitly skip state detection (force first-run
 mode), write only `skip: true`.
 
-## Pre-Check: CLI Metadata
+## Fast Path
 
-Before scanning artifacts, read `.pibrc.json` at the project root. This
-file is created by `npx create-claude-rails` and records which modules
-were installed, which were skipped (with reasons), and the package version.
+Check for `_context.md` (or `.claude/skills/perspectives/_context.md`).
+If it doesn't exist, the mode is **first-run** — skip the full scan and
+move to the interview immediately. No need to check 10 artifact types
+when the primary signal is absent.
 
-If `.pibrc.json` is absent, this skill was installed manually (not via
-the CLI). That's fine — proceed with the artifact scan. The interview
-and modularity menu will handle module decisions.
+Also read `.pibrc.json` if it exists — it records which modules the CLI
+installed and which were skipped (with reasons). The interview phase uses
+this to skip redundant questions.
 
-If `.pibrc.json` exists, note the installed and skipped modules. The
-interview phase uses this to skip redundant questions and the modularity
-menu uses `skipped` reasons to ask about alternatives.
+## Full Scan (re-runs only)
 
-## What to Scan
-
-Check for these artifacts and classify each as absent, empty, or populated:
+Only when `_context.md` exists, scan these artifacts to distinguish
+early vs mature re-run:
 
 | Artifact | Path Pattern | Indicates |
 |----------|-------------|-----------|
-| Project context | `_context.md` or `.claude/skills/perspectives/_context.md` | Context layer exists |
 | System status | `system-status.md` | State tracking exists |
 | Orient phases | `.claude/skills/orient/phases/*.md` | Session loop is wired |
 | Debrief phases | `.claude/skills/debrief/phases/*.md` | Session loop is wired |
 | Work tracking DB | `pib.db` | Work tracking is active |
 | Perspective groups | `_groups.yaml` or `.claude/skills/perspectives/_groups.yaml` | Audit system configured |
-| Memory patterns | `memory/patterns/*.md` | Feedback loop is active |
+| Memory patterns | `memory/patterns/*.md` or `.claude/memory/patterns/*.md` | Feedback loop is active |
 | CLAUDE.md | Root `CLAUDE.md` | Project instructions exist |
 | Rules files | `.claude/rules/*.md` | Scoped instructions exist |
 | Hook config | `.claude/settings.json` or `.claude/settings.local.json` | Enforcement hooks exist |
 
-## Mode Determination
-
-**First run:** `_context.md` does not exist. No PIB context layer has been
-generated yet. Even if other artifacts exist (e.g., a CLAUDE.md written
-by hand), the absence of the generated context file means onboard hasn't
-run before.
-
-**Early re-run:** `_context.md` exists but the artifact set is sparse.
-Fewer than 5 of the scanned artifacts are populated. The session loop
-may be wired but modules like work tracking, audit, and enforcement are
-not yet active. The project is young — it has been through a few sessions
-but hasn't accumulated rich process infrastructure.
-
-**Mature re-run:** `_context.md` exists and 5 or more scanned artifacts
-are populated. The project has a working session loop, some form of work
-tracking, and at least one additional module (audit, enforcement, or
-memory). The context layer has had time to accumulate gaps and drift.
+**Early re-run:** Fewer than 5 of the above are populated.
+**Mature re-run:** 5 or more are populated.
 
 ## Output
 
-Report findings as a structured summary that subsequent phases can
+For first-run: `Mode: first-run` — that's it. Move on.
+
+For re-runs, report a structured summary that subsequent phases can
 reference:
 
 ```
-Mode: first-run | early-rerun | mature-rerun
+Mode: early-rerun | mature-rerun
 
 Artifacts found:
-  - _context.md: populated (last modified 2026-03-15)
   - system-status.md: populated
   - orient phases: 3 files (context.md, work-scan.md, health-checks.md)
-  - debrief phases: 2 files (inventory.md, update-state.md)
   - pib.db: absent
   - memory patterns: 4 files
   ...
