@@ -2,13 +2,13 @@
 name: onboard
 description: |
   Conversational interview that generates the initial context layer for a
-  project adopting PIB. Re-runnable at different maturity stages — each run
+  project adopting Claude on Rails. Re-runnable at different maturity stages — each run
   refines based on what the project has learned. Use when: "onboard",
-  "set up PIB", "bootstrap", "/onboard".
+  "set up CoR", "bootstrap", "/onboard".
 related:
   - type: file
     path: .claude/skills/onboard/phases/detect-state.md
-    role: "Detect existing PIB artifacts and determine run mode"
+    role: "Detect existing CoR artifacts and determine run mode"
   - type: file
     path: .claude/skills/onboard/phases/interview.md
     role: "Conversational interview questions"
@@ -33,7 +33,7 @@ related:
 
 ## Purpose
 
-Generate the context layer that makes every other PIB skill work. Without
+Generate the context layer that makes every other CoR skill work. Without
 context — what is this project, what stack does it use, what breaks, who
 works on it — the session loop runs blind. Orient reads files that don't
 exist yet. Debrief records lessons into a structure that hasn't been
@@ -69,7 +69,7 @@ Onboard is re-runnable. What it does depends on what already exists:
 
 ### 1. First Run (no _context.md)
 
-No PIB context layer exists yet. This is the full interview: who are you,
+No CoR context layer exists yet. This is the full interview: who are you,
 what is this, what breaks, what do you need. Generates the complete
 initial context layer — `_context.md`, CLAUDE.md additions, system-status.md,
 and session loop wiring. The goal is a working session loop by the end of
@@ -77,7 +77,7 @@ the conversation.
 
 ### 2. Early Re-Run (sparse artifacts)
 
-Some PIB artifacts exist but the project is young. The session loop has
+Some CoR artifacts exist but the project is young. The session loop has
 run a few times and the user has learned what works and what doesn't.
 The interview shifts to refinement: What has the session loop taught you
 that CLAUDE.md doesn't reflect? What friction have you hit? What context
@@ -86,7 +86,7 @@ existing files rather than creating new ones.
 
 ### 3. Mature Re-Run (rich context)
 
-The project has been using PIB for a while. Context files are populated,
+The project has been using CoR for a while. Context files are populated,
 multiple modules are active, patterns have accumulated. The interview
 becomes a health check: Which modules are you actually using? Is anything
 ready to retire? What gaps have you noticed? Are there new areas the
@@ -98,7 +98,7 @@ doesn't have to declare it.
 
 ## Why This Matters
 
-Every PIB skill reads from the context layer. Orient reads `_context.md`
+Every CoR skill reads from the context layer. Orient reads `_context.md`
 to know what files to check. Plan reads it to know where work items live.
 Perspectives read it to know where to look. If the context layer is empty
 or wrong, every skill downstream is degraded. Onboard is the foundation
@@ -113,9 +113,9 @@ the periodic recalibration that keeps the context layer honest.
 
 ### 1. Detect State
 
-Read `phases/detect-state.md` for how to scan existing PIB artifacts.
+Read `phases/detect-state.md` for how to scan existing CoR artifacts.
 
-**Default (absent/empty):** Scan for the standard PIB artifact set:
+**Default (absent/empty):** Scan for the standard CoR artifact set:
 `_context.md`, `system-status.md`, `orient/phases/`, `debrief/phases/`,
 `pib.db`, `_groups.yaml`, `memory/patterns/`. Count what exists, classify
 its richness (empty file vs populated), and determine the run mode. Report
@@ -149,7 +149,7 @@ by now?
 
 This is a conversation, not a form. Ask 2-3 questions at a time, not all
 at once. Follow up on answers — if the user mentions a pain point, dig
-into it. If something sounds like it maps to a specific PIB module, note
+into it. If something sounds like it maps to a specific CoR module, note
 it for the modularity menu phase. The interview is the most valuable
 phase because it captures knowledge that no amount of file scanning can
 surface.
@@ -198,7 +198,7 @@ that's a signal to update the work-scan or health-checks phase.
 
 ### 5. Modularity Menu
 
-Read `phases/modularity-menu.md` for which PIB modules to present.
+Read `phases/modularity-menu.md` for which CoR modules to present.
 
 **Default (absent/empty):** Present the module hierarchy with adoption
 recommendations based on the interview. The session loop is always set up.
@@ -240,7 +240,7 @@ pre-flight check, not a deferred finding.
 
 | Phase | Absent = | What it customizes |
 |-------|----------|-------------------|
-| `detect-state.md` | Default: scan standard PIB artifacts | What artifacts to scan and how to determine mode |
+| `detect-state.md` | Default: scan standard CoR artifacts | What artifacts to scan and how to determine mode |
 | `interview.md` | Default: mode-adapted questions | What to ask and how to follow up |
 | `generate-context.md` | Default: create/update _context.md, CLAUDE.md, system-status.md | What files to generate and how |
 | `generate-session-loop.md` | Default: wire orient/debrief phases | How to set up the session loop |
@@ -254,7 +254,7 @@ Onboard is a companion, not a configurator. The framing is "let's figure
 out what your project needs" — not "I'll set up your system now." The
 interview is genuine curiosity about the project, not a checklist to get
 through. When the user describes a pain point, the right response is to
-understand it, not to immediately map it to a PIB module.
+understand it, not to immediately map it to a CoR module.
 
 This matters because the quality of the context layer depends on the
 quality of the conversation. A mechanical interview produces mechanical
@@ -284,13 +284,13 @@ Examples of phases mature adopters add:
 
 ## Calibration
 
-**Core failure this targets:** Starting PIB adoption with empty context
+**Core failure this targets:** Starting CoR adoption with empty context
 files, causing the session loop to run without knowing anything about the
 project it's supposed to help.
 
 ### Without Skill (Bad)
 
-A project adopts PIB. They copy the skeleton files, run `/orient` — it
+A project adopts CoR. They copy the skeleton files, run `/orient` — it
 reads a blank `_context.md` and an empty `system-status.md`, reports
 nothing useful. They run `/debrief` — it tries to close work items but
 doesn't know where work is tracked. They create a plan — perspectives
@@ -305,7 +305,7 @@ discovering context gaps one at a time.
 
 ### With Skill (Good)
 
-A project adopts PIB and runs `/onboard`. The interview asks what the
+A project adopts CoR and runs `/onboard`. The interview asks what the
 project is, what stack it uses, what hurts. The user mentions they have a
 Rails app with a PostgreSQL database, three developers, and a recurring
 problem with stale feature flags. From the conversation, onboard generates

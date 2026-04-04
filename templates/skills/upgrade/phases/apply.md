@@ -71,9 +71,9 @@ Commit after each logical group of changes:
   skeleton changes)
 
 Commit messages should describe what was upgraded:
-"Upgrade orient + debrief skeletons from upstream PIB"
-"Add trigger_condition column (PIB schema migration)"
-"Adopt /validate skill from PIB"
+"Upgrade orient + debrief skeletons from upstream CoR"
+"Add trigger_condition column (CoR schema migration)"
+"Adopt /validate skill from CoR"
 
 ## Summary
 

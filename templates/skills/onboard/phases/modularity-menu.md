@@ -1,6 +1,6 @@
 # Modularity Menu — Present Opt-In Modules
 
-Present the PIB module hierarchy so the user can decide what to adopt now
+Present the Claude on Rails module hierarchy so the user can decide what to adopt now
 and what to defer. The session loop is mandatory; everything else is
 opt-in. Progressive adoption means starting with what you need and adding
 modules as the project matures.
@@ -38,7 +38,7 @@ Present these in order from most fundamental to most specialized:
 
 ### 1. Session Loop (orient + debrief) — MANDATORY
 
-Always set up. This is the minimum viable PIB adoption. Orient reads
+Always set up. This is the minimum viable CoR adoption. Orient reads
 state at session start; debrief writes state at session end. Without
 this, nothing else has a foundation.
 
@@ -115,7 +115,7 @@ head.
 
 ### 6. Capability Seeding (seed) — OPT-IN
 
-Bootstrap new skills, perspectives, or process components from PIB
+Bootstrap new skills, perspectives, or process components from CoR
 skeleton templates.
 
 **What you get:** Quick scaffolding of new capabilities with all required

@@ -60,7 +60,7 @@ are valid starting points.
 
 ## First-Run Questions
 
-The detect-state phase identified this as a first run (no PIB context
+The detect-state phase identified this as a first run (no CoR context
 layer exists). But "first run" covers two very different situations:
 
 ### Greenfield (no project yet, or near-empty directory)
@@ -179,7 +179,7 @@ cruft. This is a health check.
 - **2-3 questions per round.** Let the user respond before asking more.
 - **Follow up on substance.** If an answer reveals something important,
   dig into it before moving on to the next topic.
-- **Note PIB module signals.** When someone describes a pain point that
+- **Note CoR module signals.** When someone describes a pain point that
   maps to a specific module, note it internally for the modularity menu
   phase — but don't interrupt the conversation to pitch the module.
 - **Don't assume answers.** Even if you can see the project's files, ask

@@ -1,11 +1,11 @@
-# Detect State — Scan PIB Artifacts and Determine Mode
+# Detect State — Scan Claude on Rails Artifacts and Determine Mode
 
-Scan the project for existing PIB artifacts to determine whether this is
+Scan the project for existing CoR artifacts to determine whether this is
 a first run, early re-run, or mature re-run. The mode determination
 drives how every subsequent phase behaves.
 
 When this file is absent or empty, the default behavior is: scan for the
-standard PIB artifact set, classify each artifact's richness, and
+standard CoR artifact set, classify each artifact's richness, and
 determine the mode. To explicitly skip state detection (force first-run
 mode), write only `skip: true`.
 

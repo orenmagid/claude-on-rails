@@ -1,10 +1,10 @@
 ---
 name: upgrade
 description: |
-  Conversational upgrade when new PIB skeletons arrive. Detects current
+  Conversational upgrade when new Claude on Rails skeletons arrive. Detects current
   adoption state, diffs against upstream, and for each change walks through
   an intelligent merge — conversation not mechanical copy. Intelligence is
-  the merge strategy. Use when: "upgrade", "update PIB", "new skeletons",
+  the merge strategy. Use when: "upgrade", "update CoR", "new skeletons",
   "/upgrade".
 related:
   - type: file
@@ -12,7 +12,7 @@ related:
     role: "Inventory current adoption state"
   - type: file
     path: .claude/skills/upgrade/phases/diff-upstream.md
-    role: "Semantic diff against upstream PIB"
+    role: "Semantic diff against upstream CoR"
   - type: file
     path: .claude/skills/upgrade/phases/merge.md
     role: "Intelligent merge strategy — the core of the skill"
@@ -21,7 +21,7 @@ related:
     role: "Apply approved changes"
 ---
 
-# /upgrade — Conversational PIB Upgrade
+# /upgrade — Conversational Claude on Rails Upgrade
 
 ## Purpose
 
@@ -34,7 +34,7 @@ nothing breaks. The upgrade path is mechanical — diff, patch, pray. This
 works for code because code has precise semantics. It fails for process
 because process is always adapted to context.
 
-AI-native methodology distributes as conversation. The upstream PIB
+AI-native methodology distributes as conversation. The upstream CoR
 package publishes new skeletons, updated defaults, additional perspectives,
 schema migrations. But the project has already adapted those skeletons —
 customized phase files, tuned perspectives, extended workflows. A
@@ -76,7 +76,7 @@ update, but phase files are NEVER overwritten by upstream changes.**
 
 Skeleton files (SKILL.md) contain the generic orchestration — the workflow
 steps, the phase protocol, the default behaviors. These are authored by
-PIB and may improve over time. When upstream publishes a better skeleton,
+CoR and may improve over time. When upstream publishes a better skeleton,
 the upgrade skill can propose replacing it.
 
 Phase files contain the project's customizations — what specific files to
@@ -95,13 +95,13 @@ between the two.
 ### 1. Detect Current State
 
 Read `phases/detect-current.md` for how to inventory the project's
-current PIB adoption.
+current CoR adoption.
 
-**Default (absent/empty):** Scan the project for PIB artifacts:
-- For each skill in `.claude/skills/`: is it a PIB skeleton? Which
+**Default (absent/empty):** Scan the project for CoR artifacts:
+- For each skill in `.claude/skills/`: is it a CoR skeleton? Which
   phase files are customized vs using defaults vs explicitly skipped?
 - Which perspectives are adopted? Which groups configured?
-- What hooks are installed from PIB?
+- What hooks are installed from CoR?
 - What pib-db schema version is in use (check for known columns)?
 - What's in `memory/patterns/`?
 
@@ -111,7 +111,7 @@ the diff phase.
 ### 2. Diff Against Upstream
 
 Read `phases/diff-upstream.md` for how to compare the project's state
-against the upstream PIB package.
+against the upstream CoR package.
 
 **Default (absent/empty):** Look for `.pib-upstream/` in the project
 root (staged by `npx create-claude-rails upgrade`). For each
@@ -209,8 +209,8 @@ the workflow. Execute them at their declared position.
 ## Proactive Trigger
 
 The upgrade skill doesn't have to wait for the user to invoke it.
-Orient can detect when upstream PIB files are newer than the project's
-adopted copies and surface "PIB updates available" in the briefing.
+Orient can detect when upstream CoR files are newer than the project's
+adopted copies and surface "CoR updates available" in the briefing.
 This is a hint, not a blocker — the user decides when to run /upgrade.
 
 To enable this, a project's orient `phases/health-checks.md` or a
@@ -242,7 +242,7 @@ that erase hard-won customizations.
 
 ### Without Skill (Bad)
 
-New PIB skeletons arrive. The user manually diffs files, trying to
+New CoR skeletons arrive. The user manually diffs files, trying to
 figure out what changed. Some changes are obvious — a new skill directory
 appeared. Others are subtle — a default behavior in an existing skeleton
 shifted. The user copies files they think are updated, accidentally
@@ -253,7 +253,7 @@ spent two sessions tuning is gone, replaced by the upstream default.
 
 ### With Skill (Good)
 
-New PIB skeletons arrive. The user runs `/upgrade`. Claude inventories
+New CoR skeletons arrive. The user runs `/upgrade`. Claude inventories
 what's adopted, diffs against upstream, and walks through each change:
 "The orient skeleton added a calendar-check phase. Your project doesn't
 have calendar integration, so this would be a no-op — skip it for now?"

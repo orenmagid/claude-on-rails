@@ -1,7 +1,7 @@
-# Diff Upstream — Compare Project Against PIB Package
+# Diff Upstream — Compare Project Against Claude on Rails Package
 
 Compare the project's current adoption state (from detect-current) against
-the upstream PIB package. Produce a categorized list of changes.
+the upstream CoR package. Produce a categorized list of changes.
 
 When this file is absent or empty, the default behavior is: look for
 `.pib-upstream/` in the project root (staged by `npx create-claude-rails
@@ -59,7 +59,7 @@ new tables, new indexes.
 
 - New hooks in upstream's recommended settings.
 - New rules files in upstream's `.claude/rules/`.
-- Changes to the PIB onboarding or seed skills.
+- Changes to the CoR onboarding or seed skills.
 
 ## Output Format
 

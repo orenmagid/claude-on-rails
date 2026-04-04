@@ -1,6 +1,6 @@
 # Generate Context — Create or Update Context Files
 
-Transform interview answers into the files that make the rest of PIB
+Transform interview answers into the files that make the rest of Claude on Rails
 functional. This is where conversation becomes infrastructure — but it
 is always a proposal, never an imposition.
 

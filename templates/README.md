@@ -59,7 +59,7 @@ adoption is straightforward: copy what you need into your project's
 | `skills/triage-audit/SKILL.md` | 5 | **Triage skeleton.** Load findings, prepare commentary, present via local web UI or CLI, apply verdicts (fix/defer/reject), create actions for approved findings. 3 phase files. |
 | `skills/onboard/SKILL.md` | 7 | **Onboarding skeleton.** Conversational interview that generates the initial context layer. Re-runnable: first run generates, subsequent runs refine. 6 phase files. |
 | `skills/seed/SKILL.md` | 7 | **Capability seeding skeleton.** Detects technology adoption signals, proposes expertise conversations, builds and maintains perspectives collaboratively. 4 phase files. |
-| `skills/upgrade/SKILL.md` | 7 | **Upgrade skeleton.** Conversational merge when new PIB skeletons arrive. Intelligence is the merge strategy — conversation, not mechanical copy. 4 phase files. |
+| `skills/upgrade/SKILL.md` | 7 | **Upgrade skeleton.** Conversational merge when new CoR skeletons arrive. Intelligence is the merge strategy — conversation, not mechanical copy. 4 phase files. |
 
 ### Scripts (6)
 
@@ -106,7 +106,7 @@ execution, audit). Each is a named domain expert encoded in markdown.
 
 | Perspective | Domain | Activation |
 |------------|--------|-----------|
-| `box-health` | PIB adoption health, phase file coverage, configuration drift, anti-bloat | Always-on during audit |
+| `box-health` | CoR adoption health, phase file coverage, configuration drift, anti-bloat | Always-on during audit |
 
 **Infrastructure files (7):**
 

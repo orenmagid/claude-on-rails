@@ -1,15 +1,15 @@
-# Extension Examples: How Flow Uses Process-in-a-Box
+# Extension Examples: How Flow Uses Claude on Rails
 
-PIB gives you skeletons. Your project fills them in via phase files —
+Claude on Rails (CoR) gives you skeletons. Your project fills them in via phase files —
 replacing defaults with project-specific behavior, adding custom phases
 the skeleton doesn't define. This document shows what that looks like
-in practice, using Flow (PIB's reference implementation) as the example.
+in practice, using Flow (CoR's reference implementation) as the example.
 
 Flow is a cognitive workspace built on Claude Code — a GTD system,
 research thread manager, and course management tool. It has a deployed
 web app (Railway), a local SQLite cache, research threads, an inbox
 pipeline, and 25+ skills. It's what happens when a project grows past
-PIB's defaults while staying on PIB's rails.
+CoR's defaults while staying on CoR's rails.
 
 You and Claude will make different choices for your project. These
 examples show what choices Flow made and why — not what you should do,
@@ -18,22 +18,22 @@ but what's possible.
 
 ## Flow's Phase File Overrides by Skill
 
-For each skeleton skill, the tables show: which PIB phase files Flow
+For each skeleton skill, the tables show: which CoR phase files Flow
 overrides (replacing default behavior with Flow-specific content), and
-which custom phase files Flow adds (concerns PIB doesn't define).
+which custom phase files Flow adds (concerns CoR doesn't define).
 
-Phase file states: **default** = PIB's behavior is fine, no override
+Phase file states: **default** = CoR's behavior is fine, no override
 needed. **override** = Flow writes its own content. **custom** = Flow
-adds a phase PIB doesn't have. **skip** = Flow actively opts out.
+adds a phase CoR doesn't have. **skip** = Flow actively opts out.
 
 ### orient
 
-PIB's orient skeleton loads context, syncs data, scans work, checks
+CoR's orient skeleton loads context, syncs data, scans work, checks
 health, and presents a briefing. Flow's orient is its most complex
 skill — 47 steps managing a deployed app, research threads, an inbox
 pipeline, and multiple always-on perspectives.
 
-| Phase | PIB Default | Flow Override |
+| Phase | CoR Default | Flow Override |
 |---|---|---|
 | `context.md` | Read status files | `system-status.md`, 7 research threads (`thread.yaml` + `CLAUDE.md`), `MEMORY.md` index, active course syllabi |
 | `data-sync.md` | Skip | DB pull from Railway (`sync-db-to-railway.sh --pull`). Report failure but don't block. |
@@ -60,12 +60,12 @@ custom phases as concerns emerge.
 
 ### debrief
 
-PIB's debrief skeleton inventories work, closes items, updates state,
+CoR's debrief skeleton inventories work, closes items, updates state,
 records lessons, and captures loose ends. Flow's debrief is the second
 most complex skill — it resolves feedback comments, runs prep scout and
 articulation sweeps, checks machine-level drift, and enforces QA gates.
 
-| Phase | PIB Default | Flow Override |
+| Phase | CoR Default | Flow Override |
 |---|---|---|
 | `inventory.md` | Scan git log + conversation | Same approach, plus check for uncommitted work, unresolved preview tool sessions |
 | `close-work.md` | Match session work against pib-db actions | Match against Railway API actions. QA perspective gate: actions can't be marked complete if QA report shows failures. Project auto-completion scan. |
@@ -86,16 +86,16 @@ articulation sweeps, checks machine-level drift, and enforces QA gates.
 | `project-completion.md` | Check if any projects have all actions completed, prompt for project close |
 
 **Key pattern:** Flow's debrief has *mandatory perspectives* — historian
-and life-tracker always activate. In PIB's skeleton, perspectives are
+and life-tracker always activate. In CoR's skeleton, perspectives are
 optional (the `perspectives.md` phase can be empty). Flow overrides this
 by listing required perspectives in its close-work and loose-ends phases.
 
 ### validate
 
-PIB's validate skeleton runs validators from a single phase file. Flow
+CoR's validate skeleton runs validators from a single phase file. Flow
 overrides with 8 specific validators.
 
-| Phase | PIB Default | Flow Override |
+| Phase | CoR Default | Flow Override |
 |---|---|---|
 | `validators.md` | Commented-out examples | 8 validators: fid coverage (`validate-fids.sh`), thread structure (`validate-threads.sh`), folder integrity (`validate-folders.sh`), MEMORY.md references, TypeScript (`npx tsc --noEmit`), Vite build (`npx vite build`), ESLint (`npx eslint`), Mantine import check |
 
@@ -104,11 +104,11 @@ does the job. Flow just fills in its specific checks.
 
 ### plan
 
-PIB's plan skeleton researches, checks overlap, drafts with template,
+CoR's plan skeleton researches, checks overlap, drafts with template,
 runs perspective critique, checks completeness, presents, and files work.
 Flow's plan adds a design committee pattern and specific work tracking.
 
-| Phase | PIB Default | Flow Override |
+| Phase | CoR Default | Flow Override |
 |---|---|---|
 | `research.md` | Explore codebase | Same, plus check ecosystem memory (`reference-skill-ecosystem.md`) for prior art |
 | `overlap-check.md` | Query pib-db | Query Railway DB via sqlite3 on local cache. Check open actions + recent completed. |
@@ -126,11 +126,11 @@ Flow's plan adds a design committee pattern and specific work tracking.
 
 ### execute
 
-PIB's execute skeleton loads the plan, activates perspectives, implements
+CoR's execute skeleton loads the plan, activates perspectives, implements
 with checkpoints, validates, and commits. Flow adds QA enforcement and
 design mock verification.
 
-| Phase | PIB Default | Flow Override |
+| Phase | CoR Default | Flow Override |
 |---|---|---|
 | `load-plan.md` | Read plan from conversation or file | Same, plus check for design mocks in action notes (`mock_path`) and `.claude/mocks/` |
 | `perspectives.md` | Activate relevant perspectives | QA always-on. Boundary-conditions always-on. Others per plan's surface area. |
@@ -141,15 +141,15 @@ design mock verification.
 **Key pattern:** Flow's execute enforces a QA gate — the QA perspective
 produces a verification report at checkpoint 3, and debrief won't mark
 actions complete if QA shows failures. This is the "mandatory perspective"
-pattern: a perspective that's advisory in PIB becomes load-bearing in Flow.
+pattern: a perspective that's advisory in CoR becomes load-bearing in Flow.
 
 ### audit
 
-PIB's audit skeleton selects perspectives, runs structural checks, loads
+CoR's audit skeleton selects perspectives, runs structural checks, loads
 triage suppression, spawns perspective agents, and persists findings.
 Flow overrides the data layer and execution model.
 
-| Phase | PIB Default | Flow Override |
+| Phase | CoR Default | Flow Override |
 |---|---|---|
 | `perspective-selection.md` | Discover from SKILL.md files, use groups | Same discovery, but 21 additional domain perspectives available |
 | `structural-checks.md` | Run fast structural scripts | Same validators as `/validate`, run before LLM analysis |
@@ -164,19 +164,19 @@ Flow overrides the data layer and execution model.
 | `triage.md` | Programmatic triage of findings via Railway API PATCH endpoint (approve/reject/defer) |
 | `next-steps.md` | Offer quick-fix, /plan, or bulk triage based on findings after output |
 
-**Why nested agents instead of subprocesses:** PIB's default uses
+**Why nested agents instead of subprocesses:** CoR's default uses
 `claude --print` for parallel perspective execution. Flow found that
 subprocess spawning creates API concurrency errors during active
 sessions. Nested Agent tool calls avoid this. A project without this
-constraint can use PIB's subprocess default.
+constraint can use CoR's subprocess default.
 
 ### pulse
 
-PIB's pulse skeleton checks self-description accuracy, spots dead
+CoR's pulse skeleton checks self-description accuracy, spots dead
 references, and detects staleness. Flow overrides with extensive
 count verification and principle practice checks.
 
-| Phase | PIB Default | Flow Override |
+| Phase | CoR Default | Flow Override |
 |---|---|---|
 | `checks.md` | Count freshness, dead references | Count freshness across 3 files (`project-skills-infrastructure.md`, `system-status.md`, `_context.md`). Dead reference spot-check with rotation tracking (`pulse-state.json`). Skill staleness (last-verified > 30d). Rules enforcement health. Session drift detection. Principle spot-check (samples different principle each run). Memory index auto-fix. |
 | `auto-fix-scope.md` | Closed list of safe fixes | Same closed list: numeric counts, MEMORY.md filenames, system-status moves, `_context.md` perspective lists, last-verified dates |
@@ -190,10 +190,10 @@ project could adopt.
 
 ### triage-audit
 
-PIB's triage skeleton loads findings, presents via UI, and applies
+CoR's triage skeleton loads findings, presents via UI, and applies
 verdicts. Flow overrides the data source and verdict application.
 
-| Phase | PIB Default | Flow Override |
+| Phase | CoR Default | Flow Override |
 |---|---|---|
 | `load-findings.md` | Query pib-db or read JSON files | Fetch from Railway DB via API with severity + perspective ordering |
 | `triage-ui.md` | Start local `triage-server.mjs`, open browser | Same local server, but opened via Chrome MCP tool for reading verdicts |
@@ -218,7 +218,7 @@ project could implement for its own domain.
 | Change-type deployment | `/deploy` | Classifies changes (markdown-only, code, mixed), takes appropriate deploy path (git push vs git push + platform deploy), verifies | Any project with multiple deployment paths depending on what changed. The classify-deploy-verify loop is the pattern. |
 | Area health review | `/quarterly-review` | SQL-driven area-by-area walkthrough: stale actions, recurring cadence health, person context freshness, open loops, supply patterns | Any project with areas of responsibility benefits from periodic health queries. The SQL query templates are reusable. |
 
-These are future extraction candidates. If PIB grows beyond Wave 6, the
+These are future extraction candidates. If CoR grows beyond Wave 6, the
 highest-value patterns to skeleton would be: entity scaffolding (widely
 applicable), prompt refinement (universal for Claude Code projects), and
 command queue processing (needed by any project with an async work queue).
@@ -226,7 +226,7 @@ command queue processing (needed by any project with an async work queue).
 
 ## Writing Domain-Specific Perspectives
 
-PIB ships 14 generic perspectives. Flow has 19 additional domain-specific
+CoR ships 14 generic perspectives. Flow has 19 additional domain-specific
 perspectives. Here are three examples showing how to write your own.
 
 ### Example 1: GTD (encoding domain expertise)
@@ -305,7 +305,7 @@ Eight skills contained reusable patterns (documented in the table above).
 The full analysis is in the methodology essay's Wave 6 findings section.
 
 These are patterns, not extraction candidates — yet. The patterns are
-documented here so PIB users know what's possible. If your project needs
+documented here so CoR users know what's possible. If your project needs
 entity scaffolding or prompt refinement, you'll write your own version.
-If PIB grows a Wave 7, the strongest candidates for skeleton extraction
+If CoR grows a Wave 7, the strongest candidates for skeleton extraction
 are scaffold, refine-prompts, and handle-findings.

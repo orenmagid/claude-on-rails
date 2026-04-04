@@ -51,7 +51,7 @@ Deferred:
 ### What to Do Next
 
 Concrete next steps, not abstract advice:
-- "Run `/orient` to start your first PIB session. It will read the
+- "Run `/orient` to start your first CoR session. It will read the
   context files we just generated."
 - "After your first working session, run `/debrief` to close the loop."
 - "The context files are rough. After 3-5 sessions, run `/onboard` again
