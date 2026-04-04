@@ -1,0 +1,29 @@
+{
+  "name": "create-claude-rails",
+  "version": "0.1.0",
+  "description": "Claude on Rails — opinionated process scaffolding for Claude Code projects",
+  "bin": {
+    "create-claude-rails": "bin/create-claude-rails.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "templates/"
+  ],
+  "keywords": [
+    "claude",
+    "claude-code",
+    "scaffolding",
+    "process",
+    "ai",
+    "workflow"
+  ],
+  "author": "Oren Magid",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "prompts": "^2.4.2"
+  }
+}

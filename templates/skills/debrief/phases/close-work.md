@@ -1,0 +1,88 @@
+# Close Work — Match, Close, and Resolve
+
+Define how to match the session's work against open items and close them.
+This includes marking tasks done, resolving feedback, and updating any
+tracking system. The /debrief skill reads this file after inventorying
+what was done.
+
+When this file is absent or empty, the default behavior is: query the
+reference data layer (pib-db) for open actions, match against the
+session's git log, and propose marking matched actions as done. If
+pib-db is not initialized, skip gracefully.
+
+## Default Behavior (pib-db)
+
+When no custom close-work is configured:
+
+1. **Get session work:** Review `git log --oneline` for this session's
+   commits (since session start or last 2 hours)
+2. **Get open actions:** `node scripts/pib-db.js list-actions`
+3. **Match:** For each open action, check if this session's work
+   addresses it (compare action text/notes against commit messages
+   and changed files)
+4. **Propose:** Present matched actions and ask the user to confirm
+   which to close
+5. **Close confirmed:** `node scripts/pib-db.js complete-action <fid>`
+
+If pib-db doesn't exist, skip with a note.
+
+## What to Include
+
+- **How to query open items** — where your work tracker lives, how to
+  read it
+- **How to mark items done** — the command or API to update status
+- **How to resolve feedback** — if your project tracks feedback or
+  comments, how to mark them addressed
+- **What to include in completion notes** — commit references, summary
+  of what was built
+
+## Example Close-Work Patterns
+
+Uncomment and adapt these for your project:
+
+<!--
+### Task Tracker (Database)
+```bash
+# Query open tasks
+sqlite3 project.db "SELECT id, text, status FROM tasks WHERE status != 'done'"
+
+# Mark a task done with commit reference
+COMMIT=$(git log -1 --format=%h)
+sqlite3 project.db "UPDATE tasks SET status = 'done', notes = notes || '\n\nCompleted in $COMMIT' WHERE id = 'TASK_ID'"
+```
+
+### Task Tracker (API)
+```bash
+# Query open tasks
+curl -s https://your-api.example.com/api/tasks?status=open
+
+# Mark done
+curl -X PATCH https://your-api.example.com/api/tasks/TASK_ID \
+  -H "Content-Type: application/json" \
+  -d '{"status": "done", "completedRef": "COMMIT_HASH"}'
+```
+
+### Task Tracker (Markdown)
+```bash
+# Find open tasks
+grep -n '- \[ \]' tasks.md
+
+# Mark done (replace checkbox)
+# Edit the file to change `- [ ]` to `- [x]` for completed items
+```
+
+### Feedback / Comments
+```bash
+# Query unresolved feedback
+sqlite3 project.db "SELECT id, text FROM feedback WHERE resolved = 0"
+
+# Cross-reference against session work — if the feedback was addressed,
+# resolve it with a note about what fixed it
+sqlite3 project.db "UPDATE feedback SET resolved = 1, resolution = 'Fixed in COMMIT' WHERE id = FEEDBACK_ID"
+```
+
+### Follow-On Work
+When closing an item that has documented sub-phases or next steps in its
+notes, create new items for each. Known work that lives only in completed
+items' notes will be forgotten. There is no "later" — create it now.
+-->

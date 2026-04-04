@@ -1,0 +1,278 @@
+---
+name: debrief
+description: |
+  Post-session debrief. Inventories what was done, closes work items,
+  updates state, captures lessons, and reports results. The operational
+  closing that prevents entropy between sessions. This is a skeleton skill
+  using the phases/ directory pattern. Use when: session end, "debrief",
+  "wrap up", "/debrief", or after completing significant work.
+related:
+  - type: file
+    path: .claude/skills/debrief/phases/inventory.md
+    role: "Project-specific: how to identify what was done"
+  - type: file
+    path: .claude/skills/debrief/phases/close-work.md
+    role: "Project-specific: how to close work items and resolve feedback"
+  - type: file
+    path: .claude/skills/debrief/phases/auto-maintenance.md
+    role: "Project-specific: recurring session-end tasks"
+  - type: file
+    path: .claude/skills/debrief/phases/update-state.md
+    role: "Project-specific: what state to update"
+  - type: file
+    path: .claude/skills/debrief/phases/health-checks.md
+    role: "Project-specific: session-end health checks"
+  - type: file
+    path: .claude/skills/debrief/phases/record-lessons.md
+    role: "Project-specific: how to capture learnings"
+  - type: file
+    path: .claude/skills/debrief/phases/loose-ends.md
+    role: "Project-specific: non-project items to capture"
+  - type: file
+    path: .claude/skills/debrief/phases/report.md
+    role: "Project-specific: how to present the summary"
+  - type: file
+    path: .claude/skills/perspectives/_context.md
+    role: "Project identity and configuration"
+---
+
+# /debrief — Post-Session Debrief
+
+## Purpose
+
+Close every session properly so the next one starts informed. Without
+debrief, completed work stays marked as open, feedback stays unresolved,
+lessons evaporate, and the system gradually disconnects from reality.
+The session loop is the system's learning mechanism: orient reads the
+past, debrief writes the future.
+
+This is a **skeleton skill** using the `phases/` directory pattern. The
+orchestration (what to do and in what order) is generic. Your project
+defines the specifics in phase files under `phases/`.
+
+### Phase File Protocol
+
+Phase files have three states:
+
+| State | Meaning |
+|-------|---------|
+| Absent or empty | Use this skeleton's **default behavior** for the phase |
+| Contains only `skip: true` | **Explicitly opted out** — skip this phase entirely |
+| Contains content | **Custom behavior** — use the file's content instead |
+
+The skeleton always does something reasonable when a phase file is absent.
+Phase files customize, not enable. Use `skip: true` when you actively
+don't want a phase to run — not even the default.
+
+## Identity
+
+You are the closer. You care about finishing — not the building, but the
+part where the dust settles and you walk through making sure every loop
+is closed, every lesson is written down, every state file reflects
+reality. You take this seriously because you've seen what happens when
+debriefs are skipped: stale actions pile up, feedback rots, hard-won
+lessons evaporate, and three sessions later someone re-derives a solution
+that was already found.
+
+You are not a checklist executor. You are the person who owns the close.
+When a session ends, you ensure the system's state reflects what actually
+happened. If work was completed, it gets marked done — not "probably
+done, we'll check later." If a lesson was learned, it gets recorded
+before the context window closes.
+
+## When to Run
+
+- After completing significant work
+- When the user says "debrief", "wrap up", "we're done"
+- At the end of any productive session
+- **Should never be skipped.** A session that produced real work and
+  ends without debrief is a process failure — the next session starts
+  with stale state.
+
+## Workflow
+
+### 1. Inventory What Was Done (core)
+
+Read `phases/inventory.md` for how to identify what the session
+accomplished. This typically involves examining git history,
+conversation context, and files changed.
+
+**Default (absent/empty):** Review at minimum:
+- Recent git commits (`git log --oneline -20`)
+- Files changed (`git diff --stat HEAD~5`)
+- What was discussed and built during the session
+
+The goal: a clear list of what was accomplished, so subsequent steps
+can match it against open work.
+
+### 2. Close Work Items (core)
+
+Read `phases/close-work.md` for how to match session work against open
+items and close them. This includes marking tasks as done, resolving
+feedback, and updating any tracking system.
+
+**Skip (absent/empty).** The debrief can still inventory and record
+lessons, but work items won't be closed — they'll appear as open in
+the next orient, creating stale state.
+
+For each open item, determine:
+- **Clearly complete** — mark it done with a reference to what was built
+- **Partially complete** — note progress, don't mark done
+- **Should be deferred** — move to a deferred state with a reason and
+  trigger condition for when to revisit
+- **Uncertain** — ask the user, but only for genuine ambiguity
+
+When closing an item that has documented follow-on work (sub-phases,
+next steps, future enhancements), create new items for each NOW. Known
+work that lives only in completed items' notes will be forgotten.
+
+### 3. Auto-Maintenance (core)
+
+Read `phases/auto-maintenance.md` for recurring automated tasks that
+should run at session end. Same principle as orient's auto-maintenance:
+operations that decay if left to human memory.
+
+**Skip (absent/empty).**
+
+### 4. Update State (core)
+
+Read `phases/update-state.md` for what state files and documentation
+to update. This keeps the system's persistent state aligned with
+reality so the next orient reads accurate information.
+
+**Default (absent/empty):** At minimum check whether `system-status.md`
+(or equivalent) needs updating to reflect what was built, fixed, or
+changed.
+
+### 5. Health Checks (core)
+
+Read `phases/health-checks.md` for end-of-session health checks. These
+verify that the session's work didn't break anything and that the system
+is in a good state for next time.
+
+**Skip (absent/empty).**
+
+### 6. Persist Work
+
+Commit and push the session's changes. Work that's done but not
+committed is half-closed — it lives locally but isn't durable. Persist
+before recording lessons, so the commit captures code and doc changes
+while lessons go to memory (which may live outside the repo).
+
+Separate this session's changes from any pre-existing uncommitted work.
+Don't silently bundle unrelated changes.
+
+### 7. Record Lessons (core)
+
+Read `phases/record-lessons.md` for how to capture what was learned.
+This is the second irreducible purpose of debrief — the first is
+closing work, this is ensuring the next session is smarter than this
+one.
+
+**Default (absent/empty):** At minimum ask: did this session reveal
+anything that future sessions need to know? A new pattern, a gotcha,
+a process gap, a user preference? Lessons are perishable — capture
+them now while context is fresh.
+
+> **Debrief lessons vs audit findings:** Debrief captures session-specific
+> learnings — what was discovered while doing this work, what surprised
+> you, what should change. Audit captures systematic observations from
+> expert perspectives — what would a specialist notice looking at the
+> whole codebase? Different inputs (one session vs the whole system),
+> different destinations (memory/feedback vs finding database). Both
+> feed the enforcement pipeline, but through different channels.
+
+### 8. Capture Loose Ends (core)
+
+Read `phases/loose-ends.md` for non-project items and environmental
+concerns to capture before closing. Sessions generate non-project
+work — manual tasks, purchases, emails, configuration changes. If
+these aren't captured somewhere, they rely on human memory.
+
+**Skip (absent/empty).**
+
+### 9. Discover Custom Phases
+
+After running the core phases above, check for any additional phase
+files in `phases/` that the skeleton doesn't define. These are project-
+specific extensions. Each custom phase file declares its position in
+the workflow. Execute them at their declared position.
+
+### 10. Present Report (presentation)
+
+Read `phases/report.md` for how to present the debrief summary.
+
+**Default (absent/empty):** Present a brief summary:
+- Work items closed (with references)
+- State files updated
+- Lessons recorded
+- Anything needing the user's input
+
+## Phase Summary
+
+| Phase | Absent = | What it customizes |
+|-------|----------|-------------------|
+| `inventory.md` | Default: review git log + session | How to identify what was done |
+| `close-work.md` | Skip | How to close work items |
+| `auto-maintenance.md` | Skip | Recurring session-end tasks |
+| `update-state.md` | Default: check system-status.md | What state files to update |
+| `health-checks.md` | Skip | Session-end health checks |
+| `record-lessons.md` | Default: ask what was learned | How to capture learnings |
+| `loose-ends.md` | Skip | Non-project items to capture |
+| `report.md` | Default: brief summary | How to present the report |
+
+## Quick Mode
+
+Phases are either **core** (maintain system state) or **presentation**
+(surface information for the user). For lightweight session closes,
+skip presentation phases. Core phases always run.
+
+- **Core phases** (always run): inventory, close-work, auto-maintenance,
+  update-state, health-checks, record-lessons, loose-ends, persist work
+- **Presentation phases** (skippable): report
+
+A project that wants a quick debrief variant skips the report and
+outputs a minimal summary instead.
+
+## Extending
+
+To customize a phase: write content in the corresponding `phases/` file.
+To skip a phase: leave the file empty or don't create it.
+To add a phase the skeleton doesn't define: create a new file in
+`phases/` with a description of when it runs relative to the core
+phases. Claude reads whatever phase files exist at runtime.
+
+Examples of phases mature projects add:
+- Project completion scanning (auto-close projects with zero open items)
+- Prep/research passes on open work items
+- Evening preview (tomorrow's calendar, due items, prep needed)
+- Compliance checks (verify required skills were invoked)
+- Machine/environment drift detection
+
+## Calibration
+
+**Core failure this targets:** Ending a session without closing loops,
+leaving completed work marked as open, unrecorded lessons, and stale
+state that degrades the next session's orient.
+
+### Without Skill (Bad)
+
+Session ends. Work was done — a feature built, a bug fixed — but the
+task tracker still shows it as open. Feedback that was addressed stays
+unresolved. A lesson learned about a tricky API behavior isn't written
+down. Next session, orient shows stale tasks, feedback, and the same
+gotcha is rediscovered from scratch.
+
+The system is doing work but not learning from it. Each session starts
+from the same baseline instead of building on the last.
+
+### With Skill (Good)
+
+Session ends. The debrief inventories what was done, marks the feature
+as complete with a commit reference, resolves the feedback comment,
+updates the status file, and records the API gotcha in memory. Next
+session, orient shows accurate state, the feedback queue is clean, and
+when the API comes up again, the lesson is already there.
+
+The system gets smarter with each session because debrief closes the
+loop that orient opens.
