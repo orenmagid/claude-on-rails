@@ -69,6 +69,21 @@ Common re-run updates:
 - Updating work tracking configuration after switching tools
 - Removing stale information that no longer applies
 
+## Update Project Registry
+
+After generating the context layer, update `~/.claude/cor-registry.json`
+with what you learned from the interview. The installer registers the
+project with just its folder name and an empty description — onboard
+is where the real name and description get filled in.
+
+Find this project's entry by path and update:
+- **`name`** — the project's actual name (from the interview, not the
+  folder name, unless they match)
+- **`description`** — one line about what the project does
+
+This is a silent update — don't ask the user to confirm registry changes
+separately. The information already came from the interview.
+
 ## Quality Standards
 
 - **Populated, not padded.** Every section should contain real project

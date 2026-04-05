@@ -16,7 +16,7 @@ PROJECT_DIR="${1:-.}"
 PROJECT_DIR="$(cd "$PROJECT_DIR" 2>/dev/null && pwd)"
 
 CLAUDE_DIR="$PROJECT_DIR/.claude"
-VERSION="0.5.4"
+VERSION="0.5.5"
 TARBALL_URL="https://registry.npmjs.org/create-claude-rails/-/create-claude-rails-${VERSION}.tgz"
 
 echo ""
@@ -116,24 +116,10 @@ fi
 
 # --- Project registry (global) ---
 REGISTRY_FILE="$CLAUDE_HOME/cor-registry.json"
-
-# Ask for project name and description
 PROJECT_NAME=$(basename "$PROJECT_DIR")
-PROJECT_DESC=""
 
-if [ ! -f "$PROJECT_DIR/.corrc.json" ]; then
-  printf "  What's this project called? [%s] " "$PROJECT_NAME"
-  read -r input_name </dev/tty 2>/dev/null || input_name=""
-  [ -n "$input_name" ] && PROJECT_NAME="$input_name"
-
-  printf "  One line about what it is: "
-  read -r PROJECT_DESC </dev/tty 2>/dev/null || PROJECT_DESC=""
-  echo ""
-fi
-
-# Update the registry
+# Register with folder name. /onboard fills in name and description later.
 if command -v node >/dev/null 2>&1; then
-  # Use Node for reliable JSON manipulation
   node -e "
     const fs = require('fs');
     const reg = fs.existsSync('$REGISTRY_FILE')
@@ -142,14 +128,14 @@ if command -v node >/dev/null 2>&1; then
     const existing = reg.projects.findIndex(p => p.path === '$PROJECT_DIR');
     const entry = {
       path: '$PROJECT_DIR',
-      name: $(printf '%s' "$PROJECT_NAME" | node -e "process.stdout.write(JSON.stringify(require('fs').readFileSync('/dev/stdin','utf8')))"),
-      description: $(printf '%s' "$PROJECT_DESC" | node -e "process.stdout.write(JSON.stringify(require('fs').readFileSync('/dev/stdin','utf8')))"),
+      name: '$PROJECT_NAME',
+      description: '',
       version: '$VERSION',
       updatedAt: new Date().toISOString()
     };
     if (existing >= 0) {
-      // Preserve description if not re-entered
-      if (!entry.description) entry.description = reg.projects[existing].description;
+      entry.name = reg.projects[existing].name || entry.name;
+      entry.description = reg.projects[existing].description || '';
       reg.projects[existing] = entry;
     } else {
       reg.projects.push(entry);

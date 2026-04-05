@@ -23,12 +23,15 @@ If **first time**, give a brief walkthrough before the interview:
 > Claude on Rails gives your Claude Code sessions a **session loop** —
 > a start and end routine that creates continuity between sessions.
 >
-> - **`/orient`** runs at the start. It reads where things stand — what
->   you were working on, what's due, what broke. Instead of starting
->   blind, Claude starts informed.
-> - **`/debrief`** runs at the end. It records what happened — what got
->   done, what's still open, what you learned. That's what orient reads
->   next time.
+> - **`/orient`** — you type this at the start of a session. It reads
+>   where things stand — what you were working on, what's due, what
+>   broke. Instead of starting blind, Claude starts informed.
+> - **`/debrief`** — you type this at the end of a session. It records
+>   what happened — what got done, what's still open, what you learned.
+>   That's what orient reads next time.
+>
+> Neither runs automatically — you invoke them when you're ready. If
+> you forget `/debrief`, Claude will nudge you before the session ends.
 >
 > Beyond the session loop, there are optional modules: **work tracking**
 > (a local task database), **planning** (structured plans with critique
@@ -55,10 +58,13 @@ Before asking any questions, read two global files if they exist:
    project fits into that."
 
 2. **`~/.claude/cor-registry.json`** — a list of all their CoR projects.
-   If they have other projects, ask how this one relates to them: "You
-   also have [project X] and [project Y]. Does this project connect to
-   either of those?" The answer goes into `_context.md` so orient and
-   debrief can reference sibling projects when relevant.
+   If they have other projects registered, explain what that means and
+   ask how this project relates: "I see you're also using Claude on
+   Rails in [project X] — that's a separate project you've set up with
+   the same session loop. Does this project connect to that one in any
+   way? For example, does one feed data to the other, or do they share
+   code?" The answer goes into `_context.md` so orient and debrief can
+   flag when work in one project might affect the other.
 
 If neither file exists, that's fine — the installer may not have created
 them (npm install path, or the user skipped the identity questions).
