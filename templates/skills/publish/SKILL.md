@@ -68,5 +68,7 @@ With user confirmation:
 
 ### 5. Post-Publish
 
+- Re-run the lean install (`node bin/create-claude-rails.js --lean`) to
+  update the local dogfood copy with the just-published templates
 - Update `system-status.md` if it exists
 - Report the published version and npm URL
