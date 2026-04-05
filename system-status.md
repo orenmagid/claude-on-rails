@@ -16,6 +16,9 @@
 - Link/unlink skills for local dev workflow
 - Publish skill with post-publish dogfood sync
 - Extract skill for proposing upstream extraction from consuming projects
+- Upstream feedback loop: debrief phase auto-surfaces CoR friction from consuming projects
+- Write protection: hook blocks edits to manifest-tracked files, prevents downstream drift
+- Drift detection: `cor-drift-check.cjs` compares file hashes against manifest
 - Dogfooded: CoR installed on itself via `--lean` with full context layer
 
 ## What's Active
