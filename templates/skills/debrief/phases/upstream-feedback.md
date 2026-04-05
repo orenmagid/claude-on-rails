@@ -1,0 +1,106 @@
+# Upstream Feedback — Surface CoR Friction to the Source
+
+**Position:** Runs after record-lessons (step 7), before capture loose
+ends (step 8). Lessons are fresh; friction is top of mind.
+
+**This is an instruction phase** — it tells Claude what to do, not a
+customization point for the project. It ships with CoR and should not
+be deleted or replaced with `skip: true`.
+
+## What This Phase Does
+
+During debrief, Claude already has full session context: what was built,
+what went wrong, what was learned. This phase asks Claude to reflect on
+one narrow question: **was there friction with anything CoR provided?**
+
+- A skill whose flow didn't match how the project actually works
+- A phase file whose default behavior was wrong or confusing
+- A convention that fought the project's grain
+- A missing capability that required a workaround
+- An unclear SKILL.md that led to wasted time
+
+This is NOT the same as `/extract` (which looks for generalizable
+artifacts to upstream). This is field feedback — "this thing you shipped
+hurt when I used it."
+
+## Workflow
+
+### 1. Claude Reflects (silent)
+
+Review the session for CoR-specific friction. Consider:
+
+- Did any CoR skill need to be worked around or used in an unintended way?
+- Did a phase file's default behavior cause confusion or extra work?
+- Was a SKILL.md unclear, leading to misinterpretation?
+- Did the skeleton/phase separation feel wrong for something?
+- Was something missing that would have helped?
+- Did orient or debrief surface irrelevant information or miss something important?
+
+If nothing comes to mind — **stop here silently**. Most sessions have
+no CoR friction. Do not prompt the user with "any CoR feedback?" every
+time. The phase produces nothing and costs nothing unless there's
+something real.
+
+### 2. Draft Feedback (if friction found)
+
+For each friction point, draft a short feedback item:
+
+```
+## [Short title]
+
+**Skill/phase:** [which CoR component]
+**Friction:** [what happened — 2-3 sentences max]
+**Suggestion:** [what might be better — optional, can be "not sure"]
+**Session context:** [one line about what the project was doing when this came up]
+```
+
+Keep it concrete. "The plan skill was confusing" is not useful.
+"The plan skill's critique phase activated 4 perspectives when only 1
+was relevant, adding 3 minutes of noise to every plan" is useful.
+
+### 3. Surface for Confirmation
+
+Include the draft in the debrief report under a distinct heading:
+
+> **Upstream feedback for CoR:**
+> I noticed friction with [component]. Here's what I'd send:
+> [draft]
+>
+> Send this upstream? (yes / edit / skip)
+
+The user confirms, edits, or dismisses. One quick decision per item.
+Do not ask open-ended questions. Do not batch — if there are multiple
+friction points (rare), present each separately.
+
+### 4. Deliver
+
+If the user confirms, deliver the feedback. Detection and delivery
+follow the same pattern as `/extract`:
+
+**If linked** (the CoR package resolves to a local directory — check
+if `node -e "console.log(require.resolve('create-claude-rails'))"`
+points to a local path rather than a `node_modules` path):
+
+- Write the feedback as a markdown file in the CoR repo's `feedback/`
+  directory (create it if needed)
+- Filename: `[source-project]-[date]-[short-title].md`
+  (e.g., `flow-2026-04-04-plan-critique-noise.md`)
+- Add frontmatter: `type: field-feedback`, `source: [project]`,
+  `date: [ISO date]`, `component: [skill/phase name]`
+
+**If not linked** (CoR is installed from npm):
+
+- Open a GitHub issue on the CoR repo
+- Title: `Field feedback: [short title]`
+- Label: `field-feedback` (create if needed)
+- Body: the feedback markdown
+
+**If neither works** (no link, no gh access):
+
+- Output the feedback to the terminal and tell the user to file
+  it manually or copy it to the CoR repo
+
+### 5. Done
+
+Note in the debrief report what was sent and where. Move on to the
+next phase.

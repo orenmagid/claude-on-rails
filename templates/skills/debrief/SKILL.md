@@ -29,6 +29,9 @@ related:
     path: .claude/skills/debrief/phases/loose-ends.md
     role: "Project-specific: non-project items to capture"
   - type: file
+    path: .claude/skills/debrief/phases/upstream-feedback.md
+    role: "Instruction: surface CoR friction back to source repo"
+  - type: file
     path: .claude/skills/debrief/phases/report.md
     role: "Project-specific: how to present the summary"
   - type: file
@@ -182,7 +185,24 @@ them now while context is fresh.
 > different destinations (memory/feedback vs finding database). Both
 > feed the enforcement pipeline, but through different channels.
 
-### 8. Capture Loose Ends (core)
+### 8. Upstream Feedback (core)
+
+Read `phases/upstream-feedback.md`. This is an **instruction phase**
+shipped with CoR — it tells Claude to reflect on whether the session
+revealed friction with any CoR-provided skill, phase, or convention.
+
+If friction is found, Claude drafts a short feedback item and surfaces
+it in the report for the user to confirm, edit, or dismiss. If
+confirmed, the feedback is delivered to the CoR repo (via local link
+or GitHub issue). If nothing — the phase is silent.
+
+This is different from `/extract` (which proposes generalizable
+artifacts for upstreaming). This captures field friction: what hurt,
+what was confusing, what needed a workaround.
+
+**This phase should not be skipped.** It's how CoR learns from use.
+
+### 9. Capture Loose Ends (core)
 
 Read `phases/loose-ends.md` for non-project items and environmental
 concerns to capture before closing. Sessions generate non-project
@@ -191,14 +211,14 @@ these aren't captured somewhere, they rely on human memory.
 
 **Skip (absent/empty).**
 
-### 9. Discover Custom Phases
+### 10. Discover Custom Phases
 
 After running the core phases above, check for any additional phase
 files in `phases/` that the skeleton doesn't define. These are project-
 specific extensions. Each custom phase file declares its position in
 the workflow. Execute them at their declared position.
 
-### 10. Present Report (presentation)
+### 11. Present Report (presentation)
 
 Read `phases/report.md` for how to present the debrief summary.
 
@@ -218,6 +238,7 @@ Read `phases/report.md` for how to present the debrief summary.
 | `update-state.md` | Default: check system-status.md | What state files to update |
 | `health-checks.md` | Skip | Session-end health checks |
 | `record-lessons.md` | Default: ask what was learned | How to capture learnings |
+| `upstream-feedback.md` | **Instruction: always runs** | Surface CoR friction to source repo |
 | `loose-ends.md` | Skip | Non-project items to capture |
 | `report.md` | Default: brief summary | How to present the report |
 
@@ -228,7 +249,8 @@ Phases are either **core** (maintain system state) or **presentation**
 skip presentation phases. Core phases always run.
 
 - **Core phases** (always run): inventory, close-work, auto-maintenance,
-  update-state, health-checks, record-lessons, loose-ends, persist work
+  update-state, health-checks, record-lessons, upstream-feedback,
+  loose-ends, persist work
 - **Presentation phases** (skippable): report
 
 A project that wants a quick debrief variant skips the report and
