@@ -16,7 +16,7 @@ PROJECT_DIR="${1:-.}"
 PROJECT_DIR="$(cd "$PROJECT_DIR" 2>/dev/null && pwd)"
 
 CLAUDE_DIR="$PROJECT_DIR/.claude"
-VERSION="0.5.1"
+VERSION="0.5.2"
 TARBALL_URL="https://registry.npmjs.org/create-claude-rails/-/create-claude-rails-${VERSION}.tgz"
 
 echo ""
@@ -52,7 +52,7 @@ fi
 # Skip: work-tracking, compliance, validate
 
 # Skill directories to copy
-SKILL_DIRS="orient debrief menu plan execute investigate audit pulse triage-audit perspectives onboard seed cor-upgrade link unlink publish extract"
+SKILL_DIRS="orient orient-quick debrief debrief-quick menu plan execute investigate audit pulse triage-audit perspectives onboard seed cor-upgrade link unlink publish extract"
 
 # Individual hook/script files
 HOOK_FILES="cor-upstream-guard.sh skill-telemetry.sh skill-tool-telemetry.sh"

@@ -5,7 +5,9 @@ description: |
   items, runs health checks and maintenance, then presents a briefing so
   the session starts informed. This is a skeleton skill using the phases/
   directory pattern. Use when: session start, "orient", "what's the state",
-  "/orient".
+  "/orient", "quick orient", "orient-quick", "/orient-quick".
+  If "quick" is mentioned, use the Quick Mode section — run core phases
+  only, skip presentation phases.
 related:
   - type: file
     path: .claude/skills/orient/phases/context.md

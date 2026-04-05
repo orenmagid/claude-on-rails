@@ -5,7 +5,9 @@ description: |
   updates state, captures lessons, and reports results. The operational
   closing that prevents entropy between sessions. This is a skeleton skill
   using the phases/ directory pattern. Use when: session end, "debrief",
-  "wrap up", "/debrief", or after completing significant work.
+  "wrap up", "/debrief", "quick debrief", "debrief-quick", "/debrief-quick",
+  or after completing significant work. If "quick" is mentioned, use the
+  Quick Mode section — run core phases only, skip presentation phases.
 related:
   - type: file
     path: .claude/skills/debrief/phases/inventory.md
