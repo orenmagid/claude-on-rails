@@ -23,7 +23,7 @@
 
 ## What's Active
 
-- Published at v0.4.0 on npm
+- Published at v0.4.1 on npm
 - Upstream feedback loop: debrief phase auto-surfaces CoR friction from consuming projects
 - Write protection: hook blocks edits to manifest-tracked files, drift check detects modified upstream files
 - Flow perspectives synced to CoR templates (16 files), _context.md updated with missing sections
@@ -31,7 +31,6 @@
 
 ## What's Planned
 
-- Post-publish dogfood should run `/cor-upgrade` not just `--lean` (or flag stale files)
 - Onboard should ensure `_context.md` has all required `§` sections that generic templates reference
 - Run `/cor-upgrade` in Flow to update remaining 24 drifted skill/infrastructure files
 - Run `/extract` from Flow to test the proposal pipeline
