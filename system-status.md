@@ -31,8 +31,10 @@
 
 ## What's Planned
 
-- Onboard interview testing across different project types
-- Run `/cor-upgrade` in Flow to update SKILL.md skeletons
+- Post-publish dogfood should run `/cor-upgrade` not just `--lean` (or flag stale files)
+- Onboard should ensure `_context.md` has all required `§` sections that generic templates reference
+- Run `/cor-upgrade` in Flow to update remaining 24 drifted skill/infrastructure files
 - Run `/extract` from Flow to test the proposal pipeline
+- Onboard interview testing across different project types
 - Perspective seeding from tech signals (`/seed`)
 - README update to document `--lean` flag and new skills
