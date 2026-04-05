@@ -112,10 +112,6 @@ points to a local path rather than a `node_modules` path):
   > https://github.com/orenmagid/claude-on-rails/blob/main/GITHUB-SETUP.md
   > — totally optional. Your feedback is saved either way."
 
-  Only show the GitHub setup suggestion the first time. Track whether
-  it's been shown by checking for a `cor-feedback-gh-prompted` key
-  in `.corrc.json`. After the first time, just say "Saved locally."
-
 **For either local save path:**
 
 - Append the feedback to `~/.claude/cor-feedback-outbox.json` as a
