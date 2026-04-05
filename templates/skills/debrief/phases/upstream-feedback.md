@@ -88,17 +88,44 @@ points to a local path rather than a `node_modules` path):
 - Add frontmatter: `type: field-feedback`, `source: [project]`,
   `date: [ISO date]`, `component: [skill/phase name]`
 
-**If not linked** (CoR is installed from npm):
+**If not linked**, check whether `gh` is available and authenticated
+(`gh auth status` exits 0). Then present the user with their options:
 
-- Open a GitHub issue on the CoR repo
-- Title: `Field feedback: [short title]`
-- Label: `field-feedback` (create if needed)
-- Body: the feedback markdown
+- **If `gh` works**, offer two choices:
+  > "I can send this as a GitHub issue so the developer sees it
+  > directly, or save it locally. Which do you prefer?"
+  >
+  > 1. Send as GitHub issue
+  > 2. Save locally (I'll send it later or pass it along myself)
 
-**If neither works** (no link, no gh access):
+  If they choose GitHub:
+  - Open a GitHub issue on `orenmagid/claude-on-rails`
+  - Title: `Field feedback: [short title]`
+  - Label: `field-feedback` (create if needed)
+  - Body: the feedback markdown
 
-- Output the feedback to the terminal and tell the user to file
-  it manually or copy it to the CoR repo
+- **If `gh` is not available** (most common for non-developers):
+  > "I'll save this feedback locally for now. If you want, you can
+  > pass it along to the developer yourself, or set up a free GitHub
+  > account so future feedback goes directly to them. Here's a guide
+  > if you're interested:
+  > https://github.com/orenmagid/claude-on-rails/blob/main/GITHUB-SETUP.md
+  > — totally optional. Your feedback is saved either way."
+
+  Only show the GitHub setup suggestion the first time. Track whether
+  it's been shown by checking for a `cor-feedback-gh-prompted` key
+  in `.corrc.json`. After the first time, just say "Saved locally."
+
+**For either local save path:**
+
+- Append the feedback to `~/.claude/cor-feedback-outbox.json` as a
+  JSON array entry with fields: `source` (project name), `date`,
+  `component`, `title`, `body`, `status: "pending"`
+- Create the file if it doesn't exist (initialize with `[]`)
+
+**Flushing the outbox:** If a user later sets up `gh` and asks to
+send saved feedback, read the outbox, post each `pending` entry as
+a GitHub issue, and update its status to `"sent"` with the issue URL.
 
 ### 5. Done
 
