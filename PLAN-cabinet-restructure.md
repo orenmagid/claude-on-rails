@@ -977,7 +977,7 @@ writes the correct package name.
 The order matters. Some steps create redirects or break paths that later
 steps depend on. Do them in this sequence.
 
-#### Step 1: Publish to npm ⏳
+#### Step 1: Publish to npm ✅
 ```bash
 npm login          # needs MFA
 npm publish --access public
@@ -1055,7 +1055,7 @@ See section 5C above. The full Option A walkthrough.
 
 #### Step 6: Cleanup (whenever)
 - Archive `orenmagid/claude-on-rails` on GitHub
-- `npm deprecate create-claude-rails` (done in Step 1)
+- ✅ `npm deprecate create-claude-rails` (done — all 21 versions deprecated)
 - Delete `~/.claude/projects/-Users-orenmagid-claude-on-rails/` if
   no longer needed
 - Build general-purpose migration into `cor-upgrade` for future users
