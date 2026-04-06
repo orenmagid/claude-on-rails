@@ -39,12 +39,18 @@
 - Option A (recommended): clean reinstall + restore custom files
 - See PLAN-cabinet-restructure.md Part 5 for full migration plan
 
+### Before Migration
+
+- Create new GitHub repo `orenmagid/claude-cabinet`, push, update URLs
+- Rename local directory `~/claude-on-rails` → `~/claude-cabinet`
+- Re-run lean install to dogfood published package
+- See PLAN-cabinet-restructure.md Part 5F for ordered steps
+
 ### After Migration
 
 - Build 7 new cabinet members: goal-alignment, information-design,
   user-advocate, ui-experimentalist, vision, framework-quality, gtd
 - Build pre-built variant: mantine-quality (PAIR with framework-quality)
 - Build general-purpose migration into cor-upgrade
-- Rename GitHub repo
-- Set up npm redirect from old package name
+- Archive old GitHub repo `orenmagid/claude-on-rails`
 - Onboard interview testing across project types
